@@ -160,6 +160,15 @@ class GeminiClient(ChatMixin, GemMixin, ResearchMixin):
                     "__Secure-1PSIDTS", secure_1psidts, domain=".google.com"
                 )
 
+        # Load any additional cookies passed in kwargs (such as __Secure-3PSID, __Secure-3PSIDTS)
+        extra_cookies = kwargs.get("cookies")
+        if extra_cookies:
+            if isinstance(extra_cookies, Cookies):
+                self._cookies.update(extra_cookies)
+            elif isinstance(extra_cookies, dict):
+                for k, v in extra_cookies.items():
+                    self._cookies.set(k, v, domain=".google.com")
+
     @property
     def cookies(self) -> Cookies:
         """

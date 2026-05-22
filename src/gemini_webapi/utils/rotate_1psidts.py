@@ -117,7 +117,14 @@ def save_cookies(cookies: Cookies, verbose: bool = False) -> None:
 
     cookie_list = []
     for cookie in cookies.jar:
-        is_auth_cookie = cookie.name in ["__Secure-1PSID", "__Secure-1PSIDTS"]
+        is_auth_cookie = cookie.name in [
+            "__Secure-1PSID",
+            "__Secure-1PSIDTS",
+            "__Secure-3PSID",
+            "__Secure-3PSIDTS",
+            "__Secure-1PSIDCC",
+            "__Secure-3PSIDCC",
+        ]
         domain = cookie.domain.lstrip(".").lower() if cookie.domain else ""
         is_google_domain = domain == "google.com" or domain.endswith(".google.com")
         if is_google_domain and (
